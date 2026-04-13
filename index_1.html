@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darwin's Evolutionary Impact | Biology</title>
+<style>
+/* base styles */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --dark:      #1a2e1a;
+  --dark-mid:  #223322;
+  --dark-card: #2a3d2a;
+  --parch:     #f4f1eb;
+  --parch-dk:  #e8e3d8;
+  --terra:     #c4622d;
+  --terra-lt:  #d97b48;
+  --sage:      #7aad8a;
+  --sage-dk:   #4e8a60;
+  --ink:       #1f2c1f;
+  --ink-mid:   #3a4a3a;
+  --text-on-dark:  #d8e8d8;
+  --text-on-light: #2a3a2a;
+  --white:     #ffffff;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans:  system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --tr: 0.3s ease;
+  --shadow-dk: 0 4px 20px rgba(0,0,0,0.3);
+  --shadow-lt: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+
+svg.noise-filter { position: absolute; width: 0; height: 0; }
+
+html { scroll-behavior: smooth; font-size: 17px; }
+body {
+  background: var(--dark);
+  color: var(--text-on-dark);
+  font-family: var(--font-sans);
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+a { color: var(--terra); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; border-radius: 10px; display: block; }
+h1,h2,h3,h4 { font-family: var(--font-serif); line-height: 1.25; }
+p { margin-bottom: 1rem; }
+section { padding: 80px 20px; }
+.container { max-width: 1100px; margin: 0 auto; }
+
+/* scroll animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left {
+  opacity: 0; transform: translateX(-36px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right {
+  opacity: 0; transform: translateX(36px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* nav */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(26,46,26,0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(196,98,45,0.2);
+  padding: 0 20px;
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.nav-logo {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--terra);
+  font-weight: bold;
+  white-space: nowrap;
+}
+.nav-links {
+  display: flex; gap: 4px; list-style: none;
+  flex-wrap: wrap; justify-content: flex-end;
+}
+.nav-links a {
+  color: var(--text-on-dark);
+  font-size: 0.78rem;
+  padding: 6px 11px;
+  border-radius: 5px;
+  transition: background var(--tr), color var(--tr);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.nav-links a:hover {
+  background: rgba(196,98,45,0.15);
+  color: var(--terra);
+  text-decoration: none;
+}
+.nav-toggle {
+  display: none; background: none; border: none;
+  color: var(--terra); font-size: 1.5rem; cursor: pointer;
+}
+
+/* hero */
+#home {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 100px 20px 80px;
+  position: relative; overflow: hidden;
+  background: var(--dark);
+}
+.hero-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, #1a2e1a 0%, #243d24 40%, #2a2010 100%);
+  transition: background 0.1s;
+}
+.hero-noise {
+  position: absolute; inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  pointer-events: none;
+}
+.hero-glow {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 25% 60%, rgba(122,173,138,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 25%, rgba(196,98,45,0.09) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-eyebrow {
+  display: inline-block;
+  background: rgba(196,98,45,0.12);
+  border: 1px solid rgba(196,98,45,0.35);
+  color: var(--terra-lt);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
+.hero-title {
+  font-size: clamp(2.2rem, 6vw, 4.6rem);
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 20px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  text-wrap: balance;
+}
+.hero-title span { color: var(--terra-lt); }
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-on-dark);
+  max-width: 660px;
+  margin: 0 auto 44px;
+  line-height: 1.75;
+}
+.hero-cta {
+  display: inline-block;
+  background: var(--terra);
+  color: var(--white);
+  font-weight: bold;
+  padding: 14px 38px;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  transition: transform var(--tr), box-shadow var(--tr), background var(--tr);
+  box-shadow: 0 4px 20px rgba(196,98,45,0.35);
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(196,98,45,0.45);
+  background: var(--terra-lt);
+  text-decoration: none;
+}
+.scroll-indicator {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  opacity: 0.45;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+}
+.scroll-arrow {
+  width: 18px; height: 18px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%,100% { transform: rotate(45deg) translateY(0); }
+  50%      { transform: rotate(45deg) translateY(5px); }
+}
+
+/* section headers */
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.dark-section .section-eyebrow  { color: var(--terra-lt); }
+.light-section .section-eyebrow { color: var(--terra); }
+.section-title {
+  font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+  line-height: 1.2;
+  margin-bottom: 14px;
+  text-wrap: balance;
+}
+.dark-section  .section-title { color: var(--white); }
+.light-section .section-title { color: var(--ink); }
+.section-desc {
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: 1rem;
+}
+.dark-section  .section-desc { color: var(--text-on-dark); }
+.light-section .section-desc { color: var(--ink-mid); }
+.divider {
+  width: 56px; height: 3px;
+  background: linear-gradient(90deg, var(--terra), var(--sage));
+  margin: 18px auto 0;
+  border-radius: 2px;
+}
+
+/* section colors */
+.dark-section  { background: var(--dark-mid); }
+.light-section {
+  background: var(--parch);
+  color: var(--text-on-light);
+}
+.light-section p { color: var(--ink-mid); }
+.light-section h2,
+.light-section h3,
+.light-section h4 { color: var(--ink); }
+
+/* claims */
+#claims { background: var(--dark-mid); }
+
+.claim-card {
+  background: var(--dark-card);
+  border: 1px solid rgba(122,173,138,0.15);
+  border-radius: 20px;
+  padding: 0 40px 40px;
+  margin-bottom: 48px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-dk);
+  transition: transform var(--tr);
+}
+.claim-card:hover { transform: translateY(-3px); }
+.claim-card-top-band {
+  height: 5px;
+  background: linear-gradient(90deg, var(--terra), var(--sage));
+  border-radius: 20px 20px 0 0;
+  margin: 0 -40px 36px;
+}
+.claim-number {
+  font-size: 4.5rem;
+  font-family: var(--font-serif);
+  color: rgba(196,98,45,0.07);
+  position: absolute;
+  top: 20px; right: 28px;
+  line-height: 1;
+  font-weight: bold;
+  user-select: none;
+}
+.claim-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.claim-icon {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  background: rgba(196,98,45,0.1);
+  border: 1px solid rgba(196,98,45,0.2);
+}
+.claim-title-block h3 { font-size: 1.45rem; color: var(--white); margin-bottom: 5px; }
+.claim-tag {
+  display: inline-block;
+  background: rgba(122,173,138,0.15);
+  border: 1px solid rgba(122,173,138,0.25);
+  color: var(--sage);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+.why-matters {
+  background: rgba(196,98,45,0.07);
+  border-left: 3px solid var(--terra);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 18px;
+  margin-bottom: 24px;
+  font-size: 0.92rem;
+  color: var(--text-on-dark);
+  font-style: italic;
+}
+.claim-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.claim-text p { color: var(--text-on-dark); margin-bottom: 20px; }
+.claim-examples { display: flex; flex-direction: column; gap: 16px; }
+.example-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.example-box-label {
+  font-size: 0.63rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terra-lt);
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+.example-box-label.modern { color: var(--sage); }
+.example-box p { font-size: 0.88rem; color: var(--text-on-dark); margin: 0; line-height: 1.6; }
+.claim-img-wrap { margin-top: 24px; border-radius: 12px; overflow: hidden; }
+.claim-img-wrap img {
+  width: 100%; height: 210px; object-fit: cover;
+  filter: brightness(0.82) saturate(0.85);
+  transition: filter 0.4s ease, transform 0.5s ease;
+}
+.claim-img-wrap:hover img { filter: brightness(0.92) saturate(1); transform: scale(1.03); }
+.img-caption {
+  font-size: 0.7rem;
+  color: rgba(216,232,216,0.5);
+  text-align: center;
+  margin-top: 7px;
+  font-style: italic;
+}
+
+/* quiz */
+#quiz { background: var(--parch); }
+.quiz-container {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 1px solid rgba(196,98,45,0.15);
+  border-radius: 20px;
+  padding: 48px;
+  box-shadow: var(--shadow-lt);
+}
+.quiz-progress-bar {
+  height: 4px;
+  background: rgba(26,46,26,0.1);
+  border-radius: 2px;
+  margin-bottom: 36px;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--terra), var(--sage-dk));
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+.quiz-question-wrap { display: none; }
+.quiz-question-wrap.active { display: block; }
+.quiz-q-num {
+  font-size: 0.68rem;
+  color: var(--terra);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.quiz-q-text {
+  font-size: 1.1rem;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  margin-bottom: 26px;
+  line-height: 1.5;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 11px; }
+.quiz-option {
+  background: var(--parch);
+  border: 1.5px solid rgba(26,46,26,0.1);
+  border-radius: 10px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all var(--tr);
+  font-size: 0.92rem;
+  color: var(--ink-mid);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.quiz-option:hover:not([disabled]) {
+  background: rgba(196,98,45,0.07);
+  border-color: rgba(196,98,45,0.35);
+  color: var(--ink);
+}
+.quiz-option.correct {
+  background: rgba(78,138,96,0.12);
+  border-color: var(--sage-dk);
+  color: var(--ink);
+}
+.quiz-option.wrong {
+  background: rgba(180,50,50,0.07);
+  border-color: rgba(180,50,50,0.3);
+  color: rgba(42,58,42,0.5);
+}
+.quiz-opt-letter {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(26,46,26,0.07);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; font-weight: bold; flex-shrink: 0;
+  color: var(--terra);
+}
+.quiz-option.correct .quiz-opt-letter { background: var(--sage-dk); color: white; }
+.quiz-option.wrong   .quiz-opt-letter { background: rgba(180,50,50,0.35); color: white; }
+.quiz-feedback {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  display: none;
+  line-height: 1.55;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct-fb {
+  background: rgba(78,138,96,0.1);
+  border: 1px solid rgba(78,138,96,0.25);
+  color: #2d6b40;
+}
+.quiz-feedback.wrong-fb {
+  background: rgba(180,50,50,0.07);
+  border: 1px solid rgba(180,50,50,0.2);
+  color: #8b3030;
+}
+.quiz-nav { display: flex; justify-content: flex-end; margin-top: 24px; }
+.quiz-btn {
+  background: var(--terra);
+  color: var(--white);
+  border: none;
+  padding: 11px 26px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: transform var(--tr), background var(--tr);
+  display: none;
+}
+.quiz-btn:hover { background: var(--terra-lt); transform: translateY(-1px); }
+.quiz-btn.show { display: block; }
+.quiz-result { display: none; text-align: center; }
+.quiz-result.show { display: block; }
+.quiz-score-ring {
+  width: 130px; height: 130px;
+  border-radius: 50%;
+  background: conic-gradient(var(--terra) 0%, var(--sage-dk) var(--score-pct, 0%), rgba(26,46,26,0.1) var(--score-pct, 0%));
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 22px; position: relative;
+}
+.quiz-score-ring::before {
+  content: ''; position: absolute; inset: 11px;
+  border-radius: 50%; background: var(--white);
+}
+.quiz-score-inner { position: relative; z-index: 1; text-align: center; }
+.quiz-score-num {
+  font-size: 2rem; font-family: var(--font-serif);
+  color: var(--terra); font-weight: bold; line-height: 1;
+}
+.quiz-score-denom { font-size: 0.78rem; color: var(--ink-mid); }
+.quiz-result h3 { font-size: 1.4rem; color: var(--ink); margin-bottom: 10px; }
+.quiz-result p { color: var(--ink-mid); max-width: 460px; margin: 0 auto 22px; }
+.quiz-restart {
+  background: transparent;
+  border: 2px solid var(--terra);
+  color: var(--terra);
+  padding: 11px 26px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all var(--tr);
+}
+.quiz-restart:hover { background: var(--terra); color: var(--white); }
+
+/* case study */
+#casestudy { background: var(--dark); }
+.cs-intro {
+  background: linear-gradient(135deg, rgba(196,98,45,0.07), rgba(122,173,138,0.07));
+  border: 1px solid rgba(196,98,45,0.15);
+  border-radius: 16px;
+  padding: 36px;
+  margin-bottom: 44px;
+  text-align: center;
+}
+.cs-intro h3 { font-size: 1.45rem; color: var(--terra-lt); margin-bottom: 10px; }
+.cs-intro p { color: var(--text-on-dark); max-width: 680px; margin: 0 auto; }
+.cs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 44px;
+}
+.cs-card {
+  background: var(--dark-card);
+  border: 1px solid rgba(122,173,138,0.12);
+  border-radius: 20px;
+  padding: 26px;
+  box-shadow: var(--shadow-dk);
+  transition: transform var(--tr);
+}
+.cs-card:hover { transform: translateY(-3px); }
+.cs-card-icon { font-size: 1.8rem; margin-bottom: 10px; }
+.cs-card h4 { color: var(--white); margin-bottom: 9px; font-size: 1rem; }
+.cs-card p { font-size: 0.88rem; color: var(--text-on-dark); margin: 0; line-height: 1.6; }
+.cs-connect {
+  background: var(--dark-mid);
+  border-radius: 14px;
+  padding: 32px;
+  margin-bottom: 44px;
+}
+.cs-connect h3 { color: var(--white); font-size: 1.2rem; margin-bottom: 18px; text-align: center; }
+.cs-claims-links {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 18px;
+}
+.cs-claim-link {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(196,98,45,0.18);
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+}
+.cs-claim-link .num {
+  font-size: 1.7rem; font-family: var(--font-serif);
+  color: var(--terra-lt); font-weight: bold; line-height: 1;
+}
+.cs-claim-link .name {
+  font-size: 0.72rem; color: var(--sage);
+  margin: 5px 0; font-weight: bold;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.cs-claim-link p { font-size: 0.82rem; color: var(--text-on-dark); margin: 0; line-height: 1.45; }
+
+/* Student reflection box */
+.student-reflection {
+  background: rgba(196,98,45,0.08);
+  border: 1px solid rgba(196,98,45,0.2);
+  border-left: 4px solid var(--terra);
+  border-radius: 0 14px 14px 0;
+  padding: 24px 28px;
+  margin-top: 36px;
+}
+.student-reflection h4 { color: var(--terra-lt); font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+.student-reflection p { font-size: 0.92rem; color: var(--text-on-dark); margin: 0; font-style: italic; line-height: 1.7; }
+
+.video-wrap {
+  border-radius: 14px; overflow: hidden;
+  box-shadow: var(--shadow-dk);
+  background: #000;
+  aspect-ratio: 16/9;
+  margin-bottom: 12px;
+}
+.video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+.video-caption {
+  text-align: center; font-size: 0.78rem;
+  color: rgba(216,232,216,0.5); font-style: italic;
+}
+
+/* Timeline */
+.timeline { position: relative; padding-left: 38px; margin: 36px 0; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 11px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--terra), var(--sage), var(--terra));
+}
+.timeline-item { position: relative; margin-bottom: 28px; }
+.timeline-item::before {
+  content: '';
+  position: absolute; left: -32px; top: 8px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--terra);
+  border: 2px solid var(--dark);
+  box-shadow: 0 0 0 3px rgba(196,98,45,0.2);
+}
+.timeline-date { font-size: 0.72rem; color: var(--terra-lt); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
+.timeline-title { color: var(--white); margin-bottom: 5px; font-size: 1rem; }
+.timeline-body { font-size: 0.88rem; color: var(--text-on-dark); line-height: 1.6; }
+
+/* taxonomy */
+#taxonomy { background: var(--parch); }
+.tax-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  margin-bottom: 44px;
+}
+.tax-tree {
+  background: var(--white);
+  border: 1px solid rgba(26,46,26,0.1);
+  border-radius: 16px;
+  padding: 26px;
+  box-shadow: var(--shadow-lt);
+}
+.tax-tree h3 { color: var(--ink); margin-bottom: 18px; font-size: 1rem; }
+.tree-level {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; border-radius: 6px;
+  transition: background var(--tr); cursor: default;
+}
+.tree-level:hover { background: rgba(26,46,26,0.04); }
+.tree-indent-1 { padding-left: 10px; }
+.tree-indent-2 { padding-left: 28px; }
+.tree-indent-3 { padding-left: 46px; }
+.tree-indent-4 { padding-left: 64px; }
+.tree-indent-5 { padding-left: 82px; }
+.tree-indent-6 { padding-left: 100px; }
+.tree-indent-7 { padding-left: 118px; }
+.tree-indent-8 { padding-left: 136px; }
+.tree-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%; background: var(--terra); flex-shrink: 0;
+}
+.tree-dot.green { background: var(--sage-dk); }
+.tree-label { font-size: 0.83rem; color: var(--ink-mid); }
+.tree-rank { font-size: 0.62rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-left: auto; }
+.tax-text h3 { color: var(--ink); font-size: 1.25rem; margin-bottom: 12px; }
+.tax-text p { color: var(--ink-mid); font-size: 0.93rem; }
+.tech-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+.tech-card {
+  background: var(--white);
+  border: 1px solid rgba(26,46,26,0.1);
+  border-radius: 16px;
+  padding: 26px;
+  border-top: 3px solid var(--terra);
+  box-shadow: var(--shadow-lt);
+}
+.tech-card h4 { color: var(--ink); margin-bottom: 9px; }
+.tech-card p { font-size: 0.86rem; color: var(--ink-mid); margin: 0; }
+.tech-badge {
+  display: inline-block;
+  background: rgba(78,138,96,0.1);
+  color: var(--sage-dk);
+  font-size: 0.63rem; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px; border-radius: 100px;
+  margin-bottom: 10px;
+}
+
+/* sources */
+#sources { background: var(--parch); }
+.quick-summary {
+  background: var(--white);
+  border: 1px solid rgba(196,98,45,0.18);
+  border-left: 4px solid var(--terra);
+  border-radius: 0 14px 14px 0;
+  padding: 28px 32px;
+  margin-bottom: 44px;
+  box-shadow: var(--shadow-lt);
+}
+.quick-summary h3 { color: var(--ink); font-size: 1.1rem; margin-bottom: 14px; }
+.quick-summary ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.quick-summary li {
+  font-size: 0.88rem; color: var(--ink-mid);
+  padding-left: 18px; position: relative; line-height: 1.55;
+}
+.quick-summary li::before {
+  content: '→'; position: absolute; left: 0;
+  color: var(--terra); font-size: 0.8rem;
+}
+.sources-list { display: flex; flex-direction: column; gap: 16px; }
+.source-item {
+  background: var(--white);
+  border: 1px solid rgba(26,46,26,0.1);
+  border-radius: 12px;
+  padding: 20px 22px;
+  font-size: 0.84rem;
+  color: var(--ink-mid);
+  line-height: 1.65;
+  box-shadow: var(--shadow-lt);
+}
+.source-item a { color: var(--terra); }
+
+/* footer */
+footer {
+  background: var(--dark);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 36px 20px;
+  text-align: center;
+  color: rgba(216,232,216,0.35);
+  font-size: 0.78rem;
+}
+footer strong { color: rgba(216,232,216,0.6); }
+
+/* mobile */
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute; top: 64px; left: 0; right: 0;
+    background: rgba(26,46,26,0.98);
+    flex-direction: column;
+    padding: 14px;
+    gap: 3px;
+    border-bottom: 1px solid rgba(196,98,45,0.15);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 12px 16px; font-size: 0.88rem; }
+  .claim-body    { grid-template-columns: 1fr; }
+  .cs-grid       { grid-template-columns: 1fr; }
+  .cs-claims-links { grid-template-columns: 1fr; }
+  .tax-grid      { grid-template-columns: 1fr; }
+  .quiz-container { padding: 26px 18px; }
+  .claim-card    { padding: 0 22px 28px; }
+  .claim-card-top-band { margin: 0 -22px 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">🌿 Darwin's Legacy</div>
+    <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home"      onclick="closeNav()">Home</a></li>
+      <li><a href="#claims"    onclick="closeNav()">5 Claims</a></li>
+      <li><a href="#quiz"      onclick="closeNav()">Quiz</a></li>
+      <li><a href="#casestudy" onclick="closeNav()">Case Study</a></li>
+      <li><a href="#taxonomy"  onclick="closeNav()">Taxonomy</a></li>
+      <li><a href="#sources"   onclick="closeNav()">Sources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-gradient" id="heroGradient"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content reveal">
+    <div class="hero-eyebrow">AP Biology · Evolutionary Theory</div>
+    <h1 class="hero-title">Darwin's <span>Evolutionary</span> Impact on Modern Science</h1>
+    <p class="hero-subtitle">
+      Charles Darwin published <em>On the Origin of Species</em> in 1859. More than 165 years later, his ideas still explain everything from why bacteria resist antibiotics to how new COVID variants keep showing up. This project covers his five main claims and shows how they still hold up today.
+    </p>
+    <a href="#claims" class="hero-cta">Explore the Evidence →</a>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- DARWIN'S 5 CLAIMS -->
+<section id="claims" class="dark-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">The Core Theory</div>
+      <h2 class="section-title">Darwin's Five Claims of Evolution</h2>
+      <p class="section-desc">Darwin didn't just say "things evolve." He made five specific claims about how and why. Each one has been tested over and over, and they all still hold up. Here's what they are and what they look like in the real world.</p>
+      <div class="divider"></div>
+    </div>
+
+    <!-- CLAIM 1 -->
+    <div class="claim-card reveal">
+      <div class="claim-card-top-band"></div>
+      <div class="claim-number">1</div>
+      <div class="claim-header">
+        <div class="claim-icon">🔄</div>
+        <div class="claim-title-block">
+          <h3>Nonconstancy of Species</h3>
+          <span class="claim-tag">Evolution Is Real</span>
+        </div>
+      </div>
+      <div class="why-matters">
+        Why does this matter? Before Darwin, most people thought species were fixed and never changed. This first claim is basically the whole foundation of evolution.
+      </div>
+      <div class="claim-body">
+        <div class="claim-text">
+          <p>Darwin's first claim is pretty simple: species are not permanent. They change over time. The old view was that every species was created exactly as it is and stays that way forever. Darwin looked at the evidence and said that's not right. Populations vary, some traits get passed down more than others, and over enough generations the whole species shifts into something different. That's what "nonconstancy" means, basically.</p>
+          <div class="claim-img-wrap">
+            <img src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=600&q=80" alt="Petri dish with bacterial colonies showing growth patterns" loading="lazy">
+            <p class="img-caption">Bacteria evolving resistance, right there in the petri dish</p>
+          </div>
+        </div>
+        <div class="claim-examples">
+          <div class="example-box">
+            <div class="example-box-label">Historical Example</div>
+            <p><strong>Peppered Moths in Industrial England:</strong> Before factories, most peppered moths were light-colored and blended in on pale tree bark. When soot darkened the trees, the light moths got eaten faster because they stood out. The darker moths survived and reproduced more. Within a few generations, dark moths became the majority. Bernard Kettlewell studied this in the 1950s and it became one of the first documented examples of evolution happening in real time (<a href="https://www.nature.com/articles/nature04223" target="_blank">Cook et al., 2012</a>).</p>
+          </div>
+          <div class="example-box">
+            <div class="example-box-label modern">Modern Example</div>
+            <p><strong>Antibiotic-Resistant Bacteria:</strong> <em>Staphylococcus aureus</em> used to die when exposed to penicillin. Then some bacteria had random mutations that helped them survive. Those bacteria reproduced. Now we have strains that resist multiple antibiotics and are way harder to treat. The WHO lists this as one of the biggest health threats on the planet right now (<a href="https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance" target="_blank">WHO, 2024</a>). That's nonconstancy. The species changed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLAIM 2 -->
+    <div class="claim-card reveal">
+      <div class="claim-card-top-band"></div>
+      <div class="claim-number">2</div>
+      <div class="claim-header">
+        <div class="claim-icon">🌳</div>
+        <div class="claim-title-block">
+          <h3>Common Descent</h3>
+          <span class="claim-tag">Shared Ancestry</span>
+        </div>
+      </div>
+      <div class="why-matters">
+        This one is kind of mind-blowing. Darwin said all life on Earth is basically one giant extended family. Every species alive today traces back to the same original ancestors.
+      </div>
+      <div class="claim-body">
+        <div class="claim-text">
+          <p>Common descent means that every species on Earth is connected through a shared family tree. The more similar two species are, the more recently they split apart on that tree. Darwin figured this out mostly from fossils and anatomy. But now DNA sequencing makes it incredibly clear. We share about 98.7% of our DNA with chimpanzees. We share 36% with fruit flies. Even that seems wild, but it makes complete sense if all life came from the same starting point billions of years ago.</p>
+          <div class="claim-img-wrap">
+            <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=600&q=80" alt="DNA double helix structure showing the molecular basis of heredity" loading="lazy">
+            <p class="img-caption">DNA is basically the receipt that shows who you're related to</p>
+          </div>
+        </div>
+        <div class="claim-examples">
+          <div class="example-box">
+            <div class="example-box-label">Historical Example</div>
+            <p><strong>Tiktaalik and the Fossil Record:</strong> In 2004, scientists found a 375-million-year-old fossil called <em>Tiktaalik roseae</em> in Canada. It had fish features like scales and gills but also had a neck, ribs, and stubby fins that worked almost like limbs. It was a transitional fossil, meaning it shows the shift between fish and four-limbed land animals. The really cool part is that scientists predicted where to find it before they dug it up, based on evolutionary theory (<a href="https://www.nature.com/articles/nature04353" target="_blank">Daeschler et al., 2006</a>).</p>
+          </div>
+          <div class="example-box">
+            <div class="example-box-label modern">Modern Example</div>
+            <p><strong>DNA Sequencing and Family Trees:</strong> Scientists now build <em>phylogenetic trees</em> (basically evolutionary family trees) using DNA comparisons. And here's the thing: those DNA-based trees match the fossil-based trees almost perfectly. Two completely different types of evidence pointing to the same conclusion. That's about as solid as scientific evidence gets (<a href="https://www.genome.gov/human-genome-project" target="_blank">National Human Genome Research Institute, 2022</a>).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLAIM 3 -->
+    <div class="claim-card reveal">
+      <div class="claim-card-top-band"></div>
+      <div class="claim-number">3</div>
+      <div class="claim-header">
+        <div class="claim-icon">📈</div>
+        <div class="claim-title-block">
+          <h3>Gradual Evolution</h3>
+          <span class="claim-tag">Small Changes Add Up</span>
+        </div>
+      </div>
+      <div class="why-matters">
+        Darwin argued that big differences between species don't happen overnight. They build up slowly through tons of tiny changes over huge spans of time.
+      </div>
+      <div class="claim-body">
+        <div class="claim-text">
+          <p>Gradual evolution is the idea that species change little by little, not all at once. Each small change either helps or hurts survival. Helpful ones stick around. Over thousands or millions of years, those small changes pile up into something really different from the original. Dog breeding is a good way to see this sped up. Humans basically ran an evolution experiment by selectively breeding dogs for specific traits, and the results are pretty extreme if you compare a Chihuahua to a Great Dane. Same process, just faster because we were in charge.</p>
+          <div class="claim-img-wrap">
+            <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80" alt="Dogs of different breeds showing the diversity from selective breeding" loading="lazy">
+            <p class="img-caption">All ~400 dog breeds came from one wolf ancestor through gradual change</p>
+          </div>
+        </div>
+        <div class="claim-examples">
+          <div class="example-box">
+            <div class="example-box-label">Historical Example</div>
+            <p><strong>Darwin's Finches:</strong> Peter and Rosemary Grant spent 40 years watching finches on the Galápagos island Daphne Major. During a drought in the 1970s, small soft seeds ran out and only large tough seeds were left. Finches with slightly bigger beaks could crack those seeds. They survived. The smaller-beaked birds mostly didn't. The average beak size in the whole population measurably changed within a single generation. That's gradual evolution you can actually watch (<a href="https://www.science.org/doi/10.1126/science.1070315" target="_blank">Grant and Grant, 2002</a>).</p>
+          </div>
+          <div class="example-box">
+            <div class="example-box-label modern">Modern Example</div>
+            <p><strong>Dog Domestication:</strong> All ~400 recognized domestic dog breeds came from gray wolves roughly 15,000 years ago. Humans bred them for specific jobs, looks, or temperaments, and that selective pressure produced an almost unbelievable range of variation. Whole-genome sequencing confirms they all share one domestication event (<a href="https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004016" target="_blank">Freedman et al., 2014</a>). Same wolf, totally different outcomes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLAIM 4 -->
+    <div class="claim-card reveal">
+      <div class="claim-card-top-band"></div>
+      <div class="claim-number">4</div>
+      <div class="claim-header">
+        <div class="claim-icon">🌿</div>
+        <div class="claim-title-block">
+          <h3>Multiplication of Species</h3>
+          <span class="claim-tag">How New Species Form</span>
+        </div>
+      </div>
+      <div class="why-matters">
+        So if species change over time, how do we end up with so many of them? This claim explains that. One species can split into several when groups get separated and start changing in different directions.
+      </div>
+      <div class="claim-body">
+        <div class="claim-text">
+          <p>Speciation is the scientific word for when one species becomes two or more. It usually happens when a population gets split up by some kind of barrier, like a mountain range, an ocean, or even just a lot of distance. Each group faces different conditions, so they change in different ways. After enough time, they've changed so much that they can't breed with each other anymore. At that point, they're officially separate species. The Galápagos are basically the most famous example of this ever.</p>
+          <div class="claim-img-wrap">
+            <img src="https://images.unsplash.com/photo-1549366021-9f761d450615?w=600&q=80" alt="Galapagos Islands aerial view showing isolated volcanic islands" loading="lazy">
+            <p class="img-caption">Each Galápagos island was like a separate evolution experiment</p>
+          </div>
+        </div>
+        <div class="claim-examples">
+          <div class="example-box">
+            <div class="example-box-label">Historical Example</div>
+            <p><strong>14 Finch Species from One Ancestor:</strong> When finches first landed on the Galápagos from South America, different flocks ended up on different islands. Each island had different food. Over millions of years, the populations changed to match their island's resources until they couldn't interbreed with the other islands' finches anymore. One species became 14. That's speciation in action (<a href="https://www.science.org/doi/10.1126/science.1128374" target="_blank">Grant and Grant, 2006</a>).</p>
+          </div>
+          <div class="example-box">
+            <div class="example-box-label modern">Modern Example</div>
+            <p><strong>Italian Wall Lizards in Croatia:</strong> In 1971, scientists put five pairs of lizards on a small Croatian island that was mostly plants instead of insects. By 2008, just 36 years later, those lizards had evolved longer guts with a new internal structure that helps them digest plants. The original population didn't have this. New environment, new diet, new anatomy (<a href="https://www.pnas.org/doi/10.1073/pnas.0712071105" target="_blank">Herrel et al., 2008</a>). That's fast, too.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLAIM 5 -->
+    <div class="claim-card reveal">
+      <div class="claim-card-top-band"></div>
+      <div class="claim-number">5</div>
+      <div class="claim-header">
+        <div class="claim-icon">⚙️</div>
+        <div class="claim-title-block">
+          <h3>Natural Selection</h3>
+          <span class="claim-tag">The Mechanism</span>
+        </div>
+      </div>
+      <div class="why-matters">
+        The first four claims describe patterns. This one explains why those patterns happen. Natural selection is the actual engine driving all of it.
+      </div>
+      <div class="claim-body">
+        <div class="claim-text">
+          <p>Natural selection is probably the most famous part of Darwin's theory, and for good reason. It's the mechanism that drives everything else. Here's how it works: individuals in a population vary slightly from each other. Some of that variation is inherited. Some traits help individuals survive and reproduce better than others. Those individuals have more kids, and their kids carry the same helpful traits. Over time, those traits become more common in the whole population. That's it. Simple idea, but it explains a lot.</p>
+          <div class="claim-img-wrap">
+            <img src="https://images.unsplash.com/photo-1564419320461-6870880221ad?w=600&q=80" alt="Polar bear in Arctic environment facing climate change pressures" loading="lazy">
+            <p class="img-caption">Climate change is acting as a selection pressure on Arctic species right now</p>
+          </div>
+        </div>
+        <div class="claim-examples">
+          <div class="example-box">
+            <div class="example-box-label">Historical Example</div>
+            <p><strong>Sickle-Cell Anemia and Malaria:</strong> Having two copies of the sickle-cell gene causes a painful blood disorder. So you'd think the gene would get selected out. But in regions with a lot of malaria, people with one copy of the gene are actually more resistant to malaria than people with no copies. So the gene stuck around because in those environments, having one copy gives you a survival edge. That's balancing selection, and it's a really good example of how natural selection isn't simple (<a href="https://www.cdc.gov/malaria/about/index.html" target="_blank">CDC, 2024</a>).</p>
+          </div>
+          <div class="example-box">
+            <div class="example-box-label modern">Modern Example</div>
+            <p><strong>Climate Change Reshaping Species:</strong> North American red squirrels are breeding about 18 days earlier in the year than they did in 1989, because warmer springs mean earlier food. European great tits have shifted beak lengths. Atlantic cod have gotten smaller as large fish get fished out more. These aren't random. Warmer temperatures and changed conditions are acting as selection pressures. The animals whose traits fit the new environment survive better (<a href="https://royalsocietypublishing.org/doi/10.1098/rspb.2002.2224" target="_blank">Réale et al., 2003</a>).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- QUIZ (light, right after claims) -->
+<section id="quiz" class="light-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Check Your Knowledge</div>
+      <h2 class="section-title">Quick Quiz on the 5 Claims</h2>
+      <p class="section-desc">Five questions on what you just read. Pick an answer to get immediate feedback. See how well the claims actually stuck.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="quiz-container reveal" id="quizContainer">
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="progressFill" style="width:20%"></div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="quiz-question-wrap active" data-q="0">
+        <div class="quiz-q-num">Question 1 of 5</div>
+        <div class="quiz-q-text">A bacterium that used to die when exposed to penicillin now survives and reproduces. Its offspring also survive. Which of Darwin's five claims does this most directly show?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="selectAnswer(this,0,false,'Common descent is about shared ancestry between different species, not about one population changing over time. Try again.')">
+            <span class="quiz-opt-letter">A</span> Common descent, because bacteria share ancestry with other microbes
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,0,false,'Multiplication of species is about one species splitting into two separate ones. That\'s not what\'s happening here.')">
+            <span class="quiz-opt-letter">B</span> Multiplication of species, because the bacterium is forming a new species
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,0,true,'Yes! Nonconstancy means species are not fixed. The bacterial population changed over generations in response to antibiotic pressure. That\'s exactly what this claim is about.')">
+            <span class="quiz-opt-letter">C</span> Nonconstancy of species, because the bacterial population changed across generations
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,0,false,'Gradual evolution is true here too, but the main claim being shown is that species change at all. The specific mechanism is natural selection, but nonconstancy is the pattern being shown.')">
+            <span class="quiz-opt-letter">D</span> Gradual evolution, because resistance built up slowly
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-0"></div>
+        <div class="quiz-nav"><button class="quiz-btn" id="next-0" onclick="nextQuestion(1)">Next Question →</button></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-question-wrap" data-q="1">
+        <div class="quiz-q-num">Question 2 of 5</div>
+        <div class="quiz-q-text">Scientists find a 375-million-year-old fossil with fish-like scales and gills but also a neck, ribs, and fin-like limbs. This fossil is best described as evidence for which claim?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="selectAnswer(this,1,true,'Correct. Tiktaalik is a transitional fossil showing that fish and four-limbed land animals share a common ancestor. That\'s common descent. The fossil literally fills in a gap in the family tree.')">
+            <span class="quiz-opt-letter">A</span> Common descent, it\'s a transitional form between fish and land animals
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,1,false,'Natural selection is the process that drives evolution. But fossils themselves are evidence for the patterns, like common descent, not for the process.')">
+            <span class="quiz-opt-letter">B</span> Natural selection, because the animal survived because of its mixed features
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,1,false,'Gradual evolution is supported by the fossil record in general. But this specific fossil is most often cited as evidence that fish and land vertebrates share a common ancestor.')">
+            <span class="quiz-opt-letter">C</span> Gradual evolution, because features changed slowly over millions of years
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,1,false,'Nonconstancy just means species change. That\'s technically true here too. But the bigger point of this fossil is the link between two very different groups of animals. That\'s common descent.')">
+            <span class="quiz-opt-letter">D</span> Nonconstancy, because the species looks different from modern fish
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-1"></div>
+        <div class="quiz-nav"><button class="quiz-btn" id="next-1" onclick="nextQuestion(2)">Next Question →</button></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-question-wrap" data-q="2">
+        <div class="quiz-q-num">Question 3 of 5</div>
+        <div class="quiz-q-text">The Omicron variant of SARS-CoV-2 had 30+ mutations in its spike protein compared to the original 2019 strain. People who recovered from earlier variants still got Omicron infections. What evolutionary mechanism best explains why Omicron took over globally?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="selectAnswer(this,2,false,'Artificial selection involves humans intentionally choosing which organisms reproduce. Vaccine development is human-made, but Omicron\'s rise was driven by natural processes in billions of hosts, not deliberate selection.')">
+            <span class="quiz-opt-letter">A</span> Artificial selection, because vaccine development chose which variants survived
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,2,false,'Genetic drift is random change in small populations. SARS-CoV-2 was infecting hundreds of millions of people. At that scale, the changes weren\'t random. The variants that evaded immunity had a clear advantage.')">
+            <span class="quiz-opt-letter">B</span> Genetic drift, because random mutations piled up in isolated populations
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,2,true,'Exactly right. Heritable variation existed in the virus. Variants with spike mutations that could dodge existing antibodies survived and reproduced more. Omicron outcompeted earlier variants because it fit the new immune environment better. That\'s natural selection.')">
+            <span class="quiz-opt-letter">C</span> Natural selection, because spike mutations gave Omicron a survival edge in vaccinated and recovered hosts
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,2,false,'Allopatric speciation requires geographic isolation. SARS-CoV-2 variants were competing in the same global pool of hosts at the same time. No geographic barrier was involved.')">
+            <span class="quiz-opt-letter">D</span> Allopatric speciation, because geographic isolation in different countries created different strains
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-2"></div>
+        <div class="quiz-nav"><button class="quiz-btn" id="next-2" onclick="nextQuestion(3)">Next Question →</button></div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="quiz-question-wrap" data-q="3">
+        <div class="quiz-q-num">Question 4 of 5</div>
+        <div class="quiz-q-text">DNA barcoding shows that two butterfly populations in separate mountain valleys look identical but won't breed with each other when brought together. How does evolutionary theory explain this?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="selectAnswer(this,3,false,'Common descent explains shared ancestry, not reproductive isolation. Yes, they share a common ancestor, but that doesn\'t explain why they won\'t breed now. Something happened to split them apart.')">
+            <span class="quiz-opt-letter">A</span> Common descent, they evolved from the same ancestor so they can\'t interbreed
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,3,true,'Yes. The two mountain valleys kept the populations separated long enough that they accumulated different genetic changes. Eventually those differences built up to the point where they couldn\'t interbreed anymore. That\'s allopatric speciation, which falls under multiplication of species.')">
+            <span class="quiz-opt-letter">B</span> Multiplication of species through allopatric speciation, geographic isolation drove enough genetic change that they became reproductively isolated
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,3,false,'Gradual evolution explains how changes accumulate. But it doesn\'t specifically explain reproductive isolation. The mechanism here is speciation caused by geographic separation.')">
+            <span class="quiz-opt-letter">C</span> Gradual evolution, they changed so slowly they lost compatibility
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,3,false,'Nonconstancy just means species change over time, which is happening here. But the specific phenomenon of reproductive isolation is speciation, so multiplication of species is the more accurate answer.')">
+            <span class="quiz-opt-letter">D</span> Nonconstancy, both populations changed from their ancestor
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-3"></div>
+        <div class="quiz-nav"><button class="quiz-btn" id="next-3" onclick="nextQuestion(4)">Next Question →</button></div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="quiz-question-wrap" data-q="4">
+        <div class="quiz-q-num">Question 5 of 5</div>
+        <div class="quiz-q-text">A researcher uses molecular phylogenetics and finds that giant pandas share 96% of their DNA with polar bears but only 78% with red pandas. What's the most accurate scientific conclusion?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="selectAnswer(this,4,false,'Sharing a diet doesn\'t mean sharing ancestry. DNA similarity is what actually measures evolutionary relationships. Giant pandas and red pandas share a name and eat bamboo, but genetically they\'re pretty different.')">
+            <span class="quiz-opt-letter">A</span> Giant pandas and red pandas are closely related because they both eat bamboo
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,4,false,'DNA barcoding uses short specific gene sequences to identify species. Molecular phylogenetics builds whole evolutionary trees by comparing many gene sequences at once. They\'re related techniques but not the same thing.')">
+            <span class="quiz-opt-letter">B</span> The researcher used DNA barcoding to identify each species
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,4,false,'Evolution doesn\'t have a direction or a goal. Species don\'t evolve toward anything. Natural selection just favors traits that help with current conditions, and it has no memory of where it\'s been or plans for where it\'s going.')">
+            <span class="quiz-opt-letter">C</span> Giant pandas are evolving toward becoming polar bears
+          </button>
+          <button class="quiz-option" onclick="selectAnswer(this,4,true,'Exactly right. More DNA in common means a more recent common ancestor. Giant pandas and polar bears split apart more recently than giant pandas and red pandas did. This actually overturned the old classification that grouped both "pandas" together based on looks alone.')">
+            <span class="quiz-opt-letter">D</span> Giant pandas and polar bears share a more recent common ancestor than giant pandas and red pandas do
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-4"></div>
+        <div class="quiz-nav"><button class="quiz-btn" id="next-4" onclick="showResult()">See Results →</button></div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="quiz-result" id="quizResult">
+        <div class="quiz-score-ring" id="scoreRing">
+          <div class="quiz-score-inner">
+            <div class="quiz-score-num" id="scoreNum">0</div>
+            <div class="quiz-score-denom">out of 5</div>
+          </div>
+        </div>
+        <h3 id="resultTitle">Nice work!</h3>
+        <p id="resultMsg"></p>
+        <button class="quiz-restart" onclick="restartQuiz()">Try Again</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section id="casestudy" class="dark-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Real-World Application</div>
+      <h2 class="section-title">Case Study: COVID-19 Variant Evolution</h2>
+      <p class="section-desc">The COVID-19 pandemic gave scientists a front-row seat to evolution happening in real time, tracked by thousands of researchers across the entire world at once.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="cs-intro reveal">
+      <h3>Why COVID-19 Works as an Evolution Case Study</h3>
+      <p>SARS-CoV-2 (that's the formal name for the COVID-19 virus) has a genome of about 30,000 RNA bases and can replicate in hours. RNA viruses also don't proofread their copies like DNA does, so they mutate fast. Between 2019 and 2024, the virus generated thousands of variants. Most were neutral. A few had mutations that helped the virus survive in hosts with immunity. Those ones spread. The whole thing is basically a live demonstration of natural selection at pandemic scale.</p>
+    </div>
+
+    <div class="cs-grid reveal">
+      <div class="cs-card">
+        <div class="cs-card-icon">🦠</div>
+        <h4>What Is SARS-CoV-2?</h4>
+        <p>It's a type of coronavirus that uses RNA instead of DNA to store its genetic information. RNA replication is sloppy, meaning it makes mistakes. Those mistakes are mutations. Most mutations don't do much. But occasionally one mutation helps the virus spread more easily or dodge antibodies, and that version starts winning out.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-icon">📊</div>
+        <h4>The Variant Timeline</h4>
+        <p>Wuhan strain (Dec 2019) → Alpha in the UK (Sept 2020) → Beta in South Africa (Oct 2020) → Delta in India (Oct 2020) → Omicron in southern Africa (Nov 2021) → XBB, BQ.1, JN.1 subvariants through 2024. Each new dominant variant outcompeted the previous one. That's not random.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-icon">🔬</div>
+        <h4>Why the Spike Protein Keeps Changing</h4>
+        <p>The spike protein is what the virus uses to attach to human cells. It's also what antibodies target. So there's constant pressure on the spike protein to change just enough that antibodies can't grab it as well. Omicron had over 30 spike mutations. It basically ran through the immune defenses most people had built up against earlier strains.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-icon">💉</div>
+        <h4>Vaccines and Selection Pressure</h4>
+        <p>Widespread vaccination created a new selective environment. Virus variants that could partially dodge antibodies survived better and had more offspring. This isn't a flaw in vaccines, it's evolution doing exactly what Darwin said it would. The most important lesson here is that understanding evolution helps us predict and respond to viral threats faster.</p>
+      </div>
+    </div>
+
+    <div class="cs-connect reveal">
+      <h3>How COVID-19 Connects to Darwin's Claims</h3>
+      <div class="cs-claims-links">
+        <div class="cs-claim-link">
+          <div class="num">1</div>
+          <div class="name">Nonconstancy</div>
+          <p>SARS-CoV-2 is not the same virus it was in 2019. Earlier strains are basically extinct now, replaced by hundreds of mutations worth of descendants. The virus that caused the first wave looked pretty different from Omicron. That's exactly what nonconstancy predicts: given enough time and selection pressure, a species changes.</p>
+        </div>
+        <div class="cs-claim-link">
+          <div class="num">4</div>
+          <div class="name">Multiplication</div>
+          <p>Different variants spread best in different situations. Some were better at infecting vaccinated people, others spread faster in unvaccinated populations. They weren't competing in different geographic locations like Darwin's finches, but the idea is the same: one population splitting into groups that are each better suited to a different environment.</p>
+        </div>
+        <div class="cs-claim-link">
+          <div class="num">5</div>
+          <div class="name">Natural Selection</div>
+          <p>Variants with better transmissibility and immune evasion outcompeted the old ones. Delta replaced Alpha in a matter of months. Omicron replaced Delta even faster. The variants that survived weren't "trying" to get better at spreading. They just happened to have mutations that worked, and natural selection took care of the rest.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-bottom:36px;">
+      <h3 style="color:var(--white);text-align:center;margin-bottom:14px;font-size:1.15rem;">Timeline of Major Variant Events</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">December 2019</div>
+          <h4 class="timeline-title">Ancestral Wuhan Strain</h4>
+          <p class="timeline-body">First identified in Wuhan, China. Genome shared publicly on January 10, 2020, which let scientists worldwide start tracking changes from day one.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">September 2020</div>
+          <h4 class="timeline-title">Alpha Variant (B.1.1.7)</h4>
+          <p class="timeline-body">Showed up in Kent, UK. About 70% more transmissible than the original strain. A mutation in the spike protein made it stick to human cells more easily, which gave it a clear advantage over the original strain.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">October 2020</div>
+          <h4 class="timeline-title">Delta Variant (B.1.617.2)</h4>
+          <p class="timeline-body">Came out of India. Became the dominant global strain by mid-2021. Roughly doubled viral loads in infected people. It just outcompeted Alpha for available hosts and took over.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">November 2021</div>
+          <h4 class="timeline-title">Omicron (B.1.1.529)</h4>
+          <p class="timeline-body">Emerged in southern Africa with 30+ spike mutations. Became globally dominant within weeks even in heavily vaccinated populations. Showed that evolution can work around human-engineered immunity when given enough time and hosts.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2022 to 2024</div>
+          <h4 class="timeline-title">Continued Diversification</h4>
+          <p class="timeline-body">XBB, BQ.1, EG.5, JN.1, KP and more. The virus keeps diversifying into available niches. The WHO tracks it all with real-time phylogenetic analysis, which only works because of Darwin's framework.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <h3 style="color:var(--white);text-align:center;margin-bottom:14px;font-size:1.15rem;">Video: SARS-CoV-2 Evolution Explained</h3>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/jFMgBHSRwU8" title="COVID variants and evolution explained" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <p class="video-caption">Kurzgesagt explains COVID variants and the role of selection pressure | <a href="https://www.youtube.com/@kurzgesagt" target="_blank">YouTube</a></p>
+    </div>
+
+    <div class="student-reflection reveal">
+      <h4>What I Found Interesting</h4>
+      <p>Honestly the part I kept thinking about while researching this is that the virus didn't "try" to get better at spreading. It just mutated randomly and the mutations that worked happened to survive. There was no plan. And yet the outcome looks like something that was designed to outsmart vaccines. That's kind of what makes natural selection so strange to think about. It produces results that look intentional but aren't. I think that's also why it was so controversial when Darwin first proposed it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TAXONOMY -->
+<section id="taxonomy" class="light-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Classification Science</div>
+      <h2 class="section-title">Taxonomy and Classification in the Genomic Era</h2>
+      <p class="section-desc">Classifying species used to mean looking at physical features and grouping similar-looking things together. DNA changed all of that, and confirmed most of what Darwin predicted.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="tax-grid reveal">
+      <div class="tax-text">
+        <h3>From Looking at Anatomy to Reading DNA</h3>
+        <p>For about 200 years after Linnaeus invented the classification system in 1735, scientists grouped organisms by how they looked. Shape of bones, structure of leaves, body plan. Darwin came along and explained why those groupings existed: similar species are grouped together because they share a recent common ancestor. The more similar two species are, the more recently they split apart on the evolutionary tree.</p>
+        <p>Then DNA sequencing arrived and things got really interesting. Scientists could now compare the actual genetic code of different species and build family trees based on how much of that code they share. And what happened? The DNA-based trees matched the fossil-based trees almost perfectly. Two completely different lines of evidence, same conclusion.</p>
+        <p>But DNA also overturned some old classifications. Whales used to be grouped separately from land mammals. Genomic data showed they're actually even-toed ungulates, closer to hippos than to anything that lives in the sea all its life. Birds got reclassified as avian dinosaurs. The giant panda, which was classified near raccoons for decades, turned out to be a bear.</p>
+        <p>DNA barcoding, introduced by Paul Hebert in 2003, takes this even further. It uses a short, standardized piece of DNA to identify species kind of like a barcode on a product. The BOLD database now has over 8 million barcodes for 300,000 species. It's used to catch food fraud, detect invasive species, and identify organisms in conservation work.</p>
+      </div>
+      <div>
+        <div class="tax-tree">
+          <h3>🌳 Human Taxonomy</h3>
+          <div class="tree-node">
+            <div class="tree-level tree-indent-1">
+              <div class="tree-dot"></div>
+              <span class="tree-label"><strong>Domain:</strong> Eukarya</span>
+              <span class="tree-rank">Domain</span>
+            </div>
+          </div>
+          <div class="tree-node">
+            <div class="tree-level tree-indent-2">
+              <div class="tree-dot"></div>
+              <span class="tree-label"><strong>Kingdom:</strong> Animalia</span>
+              <span class="tree-rank">Kingdom</span>
+            </div>
+          </div>
+          <div class="tree-node">
+            <div class="tree-level tree-indent-3">
+              <div class="tree-dot"></div>
+              <span class="tree-label"><strong>Phylum:</strong> Chordata</span>
+              <span class="tree-rank">Phylum</span>
+            </div>
+          </div>
+          <div class="tree-node">
+            <div class="tree-level tree-indent-4">
+              <div class="tree-dot green"></div>
+              <span class="tree-label"><strong>Class:</strong> Mammalia</span>
+              <span class="tree-rank">Class</span>
+            </div>
+          </div>
+          <div class="tree-node">
+            <div class="tree-level tree-indent-5">
+              <div class="tree-dot green"></div>
+              <span class="tree-label"><strong>Order:</strong> Primates</span>
+              <span class="tree-rank">Order</span>
+            </div>
+          </div>
+          <div class="tree-node">
+            <div class="tree-level tree-indent-6">
+              <div class="tree-dot green"></div>
+              <span class="tree-label"><strong>Family:</strong> Hominidae</span>
+              <span class="tree-rank">Family</span>
+            </div>
+          </div>
+          <div class="tree-node">
+            <div class="tree-level tree-indent-7">
+              <div class="tree-dot green"></div>
+              <span class="tree-label"><strong>Genus:</strong> <em>Homo</em></span>
+              <span class="tree-rank">Genus</span>
+            </div>
+          </div>
+          <div class="tree-node">
+            <div class="tree-level tree-indent-8">
+              <div class="tree-dot" style="background:var(--terra)"></div>
+              <span class="tree-label"><strong>Species:</strong> <em>Homo sapiens</em></span>
+              <span class="tree-rank">Species</span>
+            </div>
+          </div>
+          <div style="margin-top:18px;padding:12px 14px;background:rgba(196,98,45,0.06);border-radius:8px;border:1px solid rgba(196,98,45,0.15);">
+            <p style="font-size:0.8rem;color:var(--ink-mid);margin:0;line-height:1.55;">Each level represents a branching point in evolutionary history. Our placement in family Hominidae alongside gorillas and chimps reflects about 6 to 8 million years of shared ancestry, confirmed by both the fossil record and genomic sequencing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <h3 style="color:var(--ink);text-align:center;margin-bottom:28px;font-size:1.2rem;">Genomic Technologies That Changed Classification</h3>
+      <div class="tech-cards">
+        <div class="tech-card">
+          <div class="tech-badge">Since 2003</div>
+          <h4>DNA Barcoding</h4>
+          <p>Uses a short, standardized gene sequence (the COI gene in animals) to identify species, kind of like a product barcode. It's found thousands of species that look identical but are genetically separate. The BOLD Systems database has 8 million plus barcodes for over 300,000 species, used in food fraud detection, invasive species tracking, and conservation (<a href="https://www.boldsystems.org" target="_blank">BOLD Systems</a>).</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-badge">Since 1990s</div>
+          <h4>Molecular Phylogenetics</h4>
+          <p>Builds evolutionary family trees from DNA comparisons rather than anatomy. Overturned a bunch of old classifications. Whales turned out to be ungulates. Birds are dinosaurs. Both "pandas" aren't actually closely related. The DNA-based trees match fossil-based trees closely, which is strong evidence that both are tracking the same real history (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1693107/" target="_blank">Felsenstein, 2004</a>).</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-badge">Since 2008</div>
+          <h4>Environmental DNA (eDNA)</h4>
+          <p>Organisms shed DNA into water, soil, and air. Scientists can now sequence that environmental DNA to detect species without seeing or catching them. In 2019, eDNA surveillance found invasive Asian carp DNA in Lake Michigan before the fish themselves showed up. That kind of early detection is only possible because of how well we understand evolutionary genetics (<a href="https://www.usgs.gov/centers/umesc/science/environmental-dna" target="_blank">USGS, 2024</a>).</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-badge">Since 2014</div>
+          <h4>Comparative Genomics</h4>
+          <p>Comparing whole genomes across species shows which genes are shared across all life, which are shared across vertebrates, and which are specific to primates or humans. This evolutionary approach guides research into disease, development, and genetics. It only works because Darwin gave us the framework to understand why similar genes show up across very different species (<a href="https://www.broadinstitute.org/what-broad/areas-focus/project-spotlight/questions-and-answers-about-crispr" target="_blank">Broad Institute, 2024</a>).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section id="sources" class="light-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Works Cited</div>
+      <h2 class="section-title">Sources</h2>
+      <p class="section-desc">All sources are peer-reviewed, from government agencies (.gov), or from major research institutions. APA 7th edition format.</p>
+      <div class="divider"></div>
+    </div>
+
+
+
+    <div class="sources-list reveal">
+      <div class="source-item">
+        Cook, L. M., Grant, B. S., Saccheri, I. J., &amp; Mallet, J. (2012). Selective bird predation on the peppered moth: The last experiment of Michael Majerus. <em>Biology Letters, 8</em>(4), 609–612. <a href="https://royalsocietypublishing.org/doi/10.1098/rsbl.2011.1136" target="_blank">https://doi.org/10.1098/rsbl.2011.1136</a>
+      </div>
+      <div class="source-item">
+        Daeschler, E. B., Shubin, N. H., &amp; Jenkins, F. A. (2006). A Devonian tetrapod-like fish and the evolution of the tetrapod body plan. <em>Nature, 440</em>(7085), 757–763. <a href="https://www.nature.com/articles/nature04353" target="_blank">https://doi.org/10.1038/nature04353</a>
+      </div>
+      <div class="source-item">
+        Darwin, C. (1859). <em>On the origin of species by means of natural selection, or the preservation of favoured races in the struggle for life.</em> John Murray. Available at <a href="https://www.gutenberg.org/ebooks/1228" target="_blank">Project Gutenberg</a>
+      </div>
+      <div class="source-item">
+        Felsenstein, J. (2004). <em>Inferring phylogenies.</em> Sinauer Associates. Referenced via <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1693107/" target="_blank">NCBI</a>
+      </div>
+      <div class="source-item">
+        Freedman, A. H., Gronau, I., Schweizer, R. M., Ortega-Del Vecchyo, D., Han, E., Silva, P. M., &amp; Novembre, J. (2014). Genome sequencing highlights the dynamic early history of dogs. <em>PLOS Genetics, 10</em>(1), e1004016. <a href="https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004016" target="_blank">https://doi.org/10.1371/journal.pgen.1004016</a>
+      </div>
+      <div class="source-item">
+        Grant, P. R., &amp; Grant, B. R. (2002). Unpredictable evolution in a 30-year study of Darwin's finches. <em>Science, 296</em>(5568), 707–711. <a href="https://www.science.org/doi/10.1126/science.1070315" target="_blank">https://doi.org/10.1126/science.1070315</a>
+      </div>
+      <div class="source-item">
+        Grant, P. R., &amp; Grant, B. R. (2006). Evolution of character displacement in Darwin's finches. <em>Science, 313</em>(5784), 224–226. <a href="https://www.science.org/doi/10.1126/science.1128374" target="_blank">https://doi.org/10.1126/science.1128374</a>
+      </div>
+      <div class="source-item">
+        Hebert, P. D. N., Cywinska, A., Ball, S. L., &amp; deWaard, J. R. (2003). Biological identifications through DNA barcodes. <em>Proceedings of the Royal Society B, 270</em>(1512), 313–321. <a href="https://royalsocietypublishing.org/doi/10.1098/rspb.2002.2218" target="_blank">https://doi.org/10.1098/rspb.2002.2218</a>
+      </div>
+      <div class="source-item">
+        Herrel, A., Huyghe, K., Vanhooydonck, B., Backeljau, T., Breugelmans, K., Grbac, I., Van Damme, R., &amp; Irschick, D. J. (2008). Rapid large-scale evolutionary divergence in morphology and performance associated with exploiting different dietary resources. <em>PNAS, 105</em>(12), 4792–4795. <a href="https://www.pnas.org/doi/10.1073/pnas.0712071105" target="_blank">https://doi.org/10.1073/pnas.0712071105</a>
+      </div>
+      <div class="source-item">
+        National Human Genome Research Institute. (2022). <em>The human genome project.</em> National Institutes of Health. <a href="https://www.genome.gov/human-genome-project" target="_blank">https://www.genome.gov/human-genome-project</a>
+      </div>
+      <div class="source-item">
+        Réale, D., McAdam, A. G., Boutin, S., &amp; Berteaux, D. (2003). Genetic and plastic responses of a northern mammal to climate change. <em>Proceedings of the Royal Society B, 270</em>(1513), 591–596. <a href="https://royalsocietypublishing.org/doi/10.1098/rspb.2002.2224" target="_blank">https://doi.org/10.1098/rspb.2002.2224</a>
+      </div>
+      <div class="source-item">
+        U.S. Geological Survey. (2024). <em>Environmental DNA (eDNA).</em> USGS Upper Midwest Environmental Sciences Center. <a href="https://www.usgs.gov/centers/umesc/science/environmental-dna" target="_blank">https://www.usgs.gov/centers/umesc/science/environmental-dna</a>
+      </div>
+      <div class="source-item">
+        Viana, R., Moyo, S., Amoako, D. G., Tegally, H., Scheepers, C., Althaus, C. L., &amp; de Oliveira, T. (2022). Rapid epidemic expansion of the SARS-CoV-2 Omicron variant in southern Africa. <em>Nature, 603</em>(7902), 679–686. <a href="https://www.nature.com/articles/s41586-022-04411-y" target="_blank">https://doi.org/10.1038/s41586-022-04411-y</a>
+      </div>
+      <div class="source-item">
+        Voss, C. R. (2022). <em>Kurzgesagt: COVID vaccines and variants</em> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=jFMgBHSRwU8" target="_blank">https://www.youtube.com/watch?v=jFMgBHSRwU8</a>
+      </div>
+      <div class="source-item">
+        World Health Organization. (2024, November 21). <em>Antimicrobial resistance</em> [Fact sheet]. <a href="https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance" target="_blank">https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance</a>
+      </div>
+      <div class="source-item">
+        World Health Organization. (2024). <em>Tracking SARS-CoV-2 variants.</em> <a href="https://www.who.int/activities/tracking-SARS-CoV-2-variants" target="_blank">https://www.who.int/activities/tracking-SARS-CoV-2-variants</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Darwin's Evolutionary Impact</strong> | AP Biology | <strong>2024–2025</strong></p>
+  <p style="margin-top:6px;">Images from <a href="https://unsplash.com" target="_blank" style="color:rgba(216,232,216,0.45);">Unsplash</a>. Video from <a href="https://youtube.com" target="_blank" style="color:rgba(216,232,216,0.45);">YouTube</a>. All written sources cited above.</p>
+</footer>
+
+<script>
+// NAV
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+function closeNav() {
+  document.getElementById('navLinks').classList.remove('open');
+}
+
+// SCROLL REVEAL (Intersection Observer)
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+revealEls.forEach(el => observer.observe(el));
+
+// HERO GRADIENT PARALLAX (scroll-shift, no particles)
+window.addEventListener('scroll', () => {
+  const pct = Math.min(window.scrollY / window.innerHeight, 1);
+  const g = document.getElementById('heroGradient');
+  if (g) {
+    const r1 = Math.round(26 + pct * 8);
+    const g1 = Math.round(46 + pct * 4);
+    g.style.background = `linear-gradient(160deg, rgb(${r1},${g1},${r1}) 0%, #243d24 40%, #2a2010 100%)`;
+  }
+}, { passive: true });
+
+// ACTIVE NAV HIGHLIGHT
+const sections = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 90) current = sec.getAttribute('id');
+  });
+  navAs.forEach(a => {
+    a.style.color = '';
+    if (a.getAttribute('href') === '#' + current) a.style.color = 'var(--terra-lt)';
+  });
+}, { passive: true });
+
+// QUIZ
+let quizScore = 0;
+let quizAnswered = [false, false, false, false, false];
+
+function selectAnswer(btn, qIdx, isCorrect, feedback) {
+  if (quizAnswered[qIdx]) return;
+  quizAnswered[qIdx] = true;
+
+  const options = btn.closest('.quiz-options').querySelectorAll('.quiz-option');
+  options.forEach(opt => opt.setAttribute('disabled', true));
+
+  const fbEl  = document.getElementById('fb-' + qIdx);
+  const nextBtn = document.getElementById('next-' + qIdx);
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fbEl.className = 'quiz-feedback correct-fb show';
+    fbEl.innerHTML = '&#10003; ' + feedback;
+    quizScore++;
+  } else {
+    btn.classList.add('wrong');
+    fbEl.className = 'quiz-feedback wrong-fb show';
+    fbEl.innerHTML = '&#10007; ' + feedback;
+    options.forEach(opt => {
+      if (opt.getAttribute('onclick') && opt.getAttribute('onclick').includes(',true,')) {
+        opt.classList.add('correct');
+      }
+    });
+  }
+  nextBtn.classList.add('show');
+}
+
+function nextQuestion(idx) {
+  document.querySelectorAll('.quiz-question-wrap').forEach(q => q.classList.remove('active'));
+  document.querySelector('[data-q="' + idx + '"]').classList.add('active');
+  document.getElementById('progressFill').style.width = ((idx + 1) / 5 * 100) + '%';
+}
+
+function showResult() {
+  document.querySelectorAll('.quiz-question-wrap').forEach(q => q.classList.remove('active'));
+  document.getElementById('progressFill').style.width = '100%';
+
+  const result = document.getElementById('quizResult');
+  result.classList.add('show');
+  document.getElementById('scoreNum').textContent = quizScore;
+
+  const ring = document.getElementById('scoreRing');
+  ring.style.setProperty('--score-pct', (quizScore / 5 * 100) + '%');
+
+  const titles = ['Keep At It', 'Getting There', 'Not Bad', 'Good Work', 'Really Good', 'Perfect Score'];
+  const msgs = [
+    'Go back through the claims section and look at the examples again. The patterns should start clicking.',
+    "You've got some of it down. Review natural selection and common descent, those tend to be the tricky ones.",
+    'Solid start. A second read through the claim cards should push you to four or five.',
+    'You understand most of it. The one you missed is probably a boundary case between two similar claims.',
+    'Really strong. One slip, but you clearly get how Darwin\'s claims connect to each other.',
+    "You got all five right. That means the claims, the examples, and the modern applications all landed. Nice."
+  ];
+  document.getElementById('resultTitle').textContent = titles[quizScore];
+  document.getElementById('resultMsg').textContent   = msgs[quizScore];
+}
+
+function restartQuiz() {
+  quizScore = 0;
+  quizAnswered = [false, false, false, false, false];
+
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('progressFill').style.width = '20%';
+
+  document.querySelectorAll('.quiz-question-wrap').forEach((q, i) => {
+    q.classList.remove('active');
+    if (i === 0) q.classList.add('active');
+  });
+  document.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.classList.remove('correct', 'wrong');
+    opt.removeAttribute('disabled');
+  });
+  document.querySelectorAll('.quiz-feedback').forEach(fb => { fb.className = 'quiz-feedback'; });
+  document.querySelectorAll('.quiz-btn').forEach(btn => { btn.classList.remove('show'); });
+}
+</script>
+</body>
+</html>
